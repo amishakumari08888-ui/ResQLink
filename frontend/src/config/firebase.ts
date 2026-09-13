@@ -1,6 +1,10 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
 import {
     getAuth,
+    initializeAuth,
+    browserLocalPersistence,
+    browserSessionPersistence,
+    indexedDBLocalPersistence,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signInWithPopup,
@@ -37,7 +41,17 @@ export const isFirebaseConfigured = true;
 
 // Initialize Firebase App
 let app: FirebaseApp = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-let auth: Auth = getAuth(app);
+
+// Resilient Auth initialization with fallback to localStorage and sessionStorage
+let auth: Auth;
+try {
+    auth = initializeAuth(app, {
+        persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence],
+    });
+} catch {
+    auth = getAuth(app);
+}
+
 let googleProvider: GoogleAuthProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
