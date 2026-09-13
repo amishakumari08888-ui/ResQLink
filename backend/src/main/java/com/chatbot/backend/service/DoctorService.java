@@ -21,8 +21,9 @@ public class DoctorService {
 
     @PostConstruct
     public void initDoctorDatabase() {
-        if (doctorRepository.count() == 0) {
-            log.info("Seeding initial Doctor Database...");
+        try {
+            if (doctorRepository.count() == 0) {
+                log.info("Seeding initial Doctor Database...");
 
             List<Doctor> seedDoctors = Arrays.asList(
                 // General Medicine / Internal Medicine
@@ -98,7 +99,10 @@ public class DoctorService {
             doctorRepository.saveAll(seedDoctors);
             log.info("Successfully seeded {} doctors into Doctor Database.", seedDoctors.size());
         }
+    } catch (Exception e) {
+        log.warn("Database not ready during doctor seeding: {}", e.getMessage());
     }
+}
 
     public List<Doctor> getAllDoctors() {
         return doctorRepository.findAll();
