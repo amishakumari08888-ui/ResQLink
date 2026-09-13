@@ -21,6 +21,7 @@ target/
 
 # Firebase / credentials
 *.json
+!railway.json
 *.pem
 *.key
 *.p12

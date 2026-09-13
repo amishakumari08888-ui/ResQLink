@@ -27,6 +27,26 @@ public class GlobalExceptionHandler {
                 .body(Map.of("error", ex.getMessage()));
     }
 
+    @ExceptionHandler(org.springframework.web.HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<Map<String, Object>> handleMethodNotSupported(org.springframework.web.HttpRequestMethodNotSupportedException ex) {
+        log.warn("Request method not supported: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(Map.of(
+                        "error", "Method Not Allowed",
+                        "message", ex.getMessage() + (ex.getSupportedHttpMethods() != null ? ". Supported methods: " + ex.getSupportedHttpMethods() : "")
+                ));
+    }
+
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, Object>> handleNotReadable(org.springframework.http.converter.HttpMessageNotReadableException ex) {
+        log.warn("Malformed HTTP message: {}", ex.getMessage());
+        return ResponseEntity.badRequest()
+                .body(Map.of(
+                        "error", "Bad Request",
+                        "message", "Malformed JSON or missing request body"
+                ));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ChatResponse> handleGenericException(Exception ex) {
         log.error("Unhandled server error", ex);
