@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/chat")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5135"})
+@CrossOrigin(origins = "*")
 @Slf4j
 public class ChatController {
 

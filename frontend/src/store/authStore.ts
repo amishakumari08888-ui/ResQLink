@@ -6,7 +6,8 @@ import {
     onFirebaseAuthStateChanged,
 } from "../config/firebase";
 
-const API_BASE_URL = "http://localhost:8080";
+import { API_BASE_URL } from "../utils/constants";
+
 const AUTH_STORAGE_KEY = "nexcure_auth_user_v1";
 
 interface AuthState {

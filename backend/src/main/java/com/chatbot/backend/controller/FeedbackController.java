@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/feedback")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5135"})
+@CrossOrigin(origins = "*")
 @Slf4j
 public class FeedbackController {
 
