@@ -37,37 +37,44 @@ public class AdminService {
     }
 
     public AdminStatsDto getStats() {
-        LocalDate today = LocalDate.now();
+        try {
+            LocalDate today = LocalDate.now();
 
-        long totalUsers = userAccountRepository.count();
-        long totalInputTokens = aiUsageRepository.sumAllInputTokens();
-        long totalOutputTokens = aiUsageRepository.sumAllOutputTokens();
-        long totalTokens = totalInputTokens + totalOutputTokens;
-        long totalPrompts = aiUsageRepository.sumAllPromptCount();
-        long totalConversations = conversationRepository.count();
+            long totalUsers = userAccountRepository.count();
+            long totalInputTokens = aiUsageRepository.sumAllInputTokens();
+            long totalOutputTokens = aiUsageRepository.sumAllOutputTokens();
+            long totalTokens = totalInputTokens + totalOutputTokens;
+            long totalPrompts = aiUsageRepository.sumAllPromptCount();
+            long totalConversations = conversationRepository.count();
 
-        long todayInputTokens = aiUsageRepository.sumInputTokensByDate(today);
-        long todayOutputTokens = aiUsageRepository.sumOutputTokensByDate(today);
-        long todayTokens = todayInputTokens + todayOutputTokens;
-        long todayPrompts = aiUsageRepository.sumPromptCountByDate(today);
-        long todayUsersActive = aiUsageRepository.countActiveUsersByDate(today);
+            long todayInputTokens = aiUsageRepository.sumInputTokensByDate(today);
+            long todayOutputTokens = aiUsageRepository.sumOutputTokensByDate(today);
+            long todayTokens = todayInputTokens + todayOutputTokens;
+            long todayPrompts = aiUsageRepository.sumPromptCountByDate(today);
+            long todayUsersActive = aiUsageRepository.countActiveUsersByDate(today);
 
-        String model = groqService.getModel();
+            String model = groqService.getModel();
 
-        return AdminStatsDto.builder()
-                .totalUsers(totalUsers)
-                .totalTokens(totalTokens)
-                .totalInputTokens(totalInputTokens)
-                .totalOutputTokens(totalOutputTokens)
-                .totalPrompts(totalPrompts)
-                .totalConversations(totalConversations)
-                .todayUsersActive(todayUsersActive)
-                .todayTokens(todayTokens)
-                .todayInputTokens(todayInputTokens)
-                .todayOutputTokens(todayOutputTokens)
-                .todayPrompts(todayPrompts)
-                .aiModel(model)
-                .build();
+            return AdminStatsDto.builder()
+                    .totalUsers(totalUsers)
+                    .totalTokens(totalTokens)
+                    .totalInputTokens(totalInputTokens)
+                    .totalOutputTokens(totalOutputTokens)
+                    .totalPrompts(totalPrompts)
+                    .totalConversations(totalConversations)
+                    .todayUsersActive(todayUsersActive)
+                    .todayTokens(todayTokens)
+                    .todayInputTokens(todayInputTokens)
+                    .todayOutputTokens(todayOutputTokens)
+                    .todayPrompts(todayPrompts)
+                    .aiModel(model)
+                    .build();
+        } catch (Exception e) {
+            log.warn("Database not ready or error fetching admin stats, returning safe defaults: {}", e.getMessage());
+            return AdminStatsDto.builder()
+                    .aiModel(groqService != null ? groqService.getModel() : "openai/gpt-oss-120b")
+                    .build();
+        }
     }
 
     public List<AdminUserDto> getAllUsersWithStats() {

@@ -30,7 +30,7 @@ public class GroqService {
          * ============================================================
          */
 
-        @Value("${groq.api.key}")
+        @Value("${groq.api.key:}")
         private String apiKey;
 
         @Value("${groq.api.url:https://api.groq.com/openai/v1/chat/completions}")

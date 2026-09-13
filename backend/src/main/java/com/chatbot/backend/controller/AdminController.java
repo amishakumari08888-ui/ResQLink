@@ -22,6 +22,11 @@ public class AdminController {
         this.adminService = adminService;
     }
 
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("UP");
+    }
+
     @GetMapping("/stats")
     public ResponseEntity<AdminStatsDto> getStats() {
         log.info("Fetching admin dashboard stats");
