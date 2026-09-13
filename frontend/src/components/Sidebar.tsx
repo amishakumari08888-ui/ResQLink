@@ -1,4 +1,4 @@
-import { SquarePen, PanelLeftClose, MessageSquare, Trash2, ShieldCheck, HeartPulse, User, Star } from "lucide-react";
+import { SquarePen, PanelLeftClose, MessageSquare, Trash2, HeartPulse, User, Star } from "lucide-react";
 import { useChatStore } from "../store/chatStore";
 import { useAuthStore } from "../store/authStore";
 
@@ -12,7 +12,6 @@ export default function Sidebar() {
         selectChat,
         deleteChat,
         openFeedbackModal,
-        openAdmin,
     } = useChatStore();
 
     const { user, openAuthModal } = useAuthStore();
@@ -142,23 +141,6 @@ export default function Sidebar() {
                     </div>
                 </button>
 
-                <button
-                    type="button"
-                    onClick={openAdmin}
-                    className="
-                        flex w-full items-center gap-3 rounded-lg px-3 py-2 
-                        text-xs font-medium text-slate-300 
-                        hover:bg-[#212121] hover:text-cyan-300 transition-colors
-                    "
-                >
-                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-cyan-950 text-cyan-400 border border-cyan-500/30">
-                        <ShieldCheck size={14} />
-                    </div>
-                    <div className="flex flex-col text-left">
-                        <span className="font-semibold text-slate-100">Admin Dashboard</span>
-                        <span className="text-[10px] text-slate-400">Tokens & Users Telemetry</span>
-                    </div>
-                </button>
 
                 <div className="
                     flex items-center gap-3 rounded-lg px-3 py-2 

@@ -9,7 +9,6 @@ import {
     LogIn,
     LogOut,
     Star,
-    Shield,
 } from "lucide-react";
 
 import { useChatStore } from "../store/chatStore";
@@ -34,7 +33,6 @@ export default function Header() {
         feedbackTriggerReason,
         openFeedbackModal,
         closeFeedbackModal,
-        openAdmin,
     } = useChatStore();
 
     const { user, openAuthModal, logout } = useAuthStore();
@@ -431,42 +429,6 @@ export default function Header() {
                         </div>
                     )}
 
-                    {/* -------------------------------------------------
-                        Admin Panel Button
-                    ------------------------------------------------- */}
-                    <button
-                        onClick={openAdmin}
-                        title="Admin Dashboard (Tokens & Users)"
-                        aria-label="Admin Dashboard"
-                        className="
-                            flex
-                            items-center
-                            gap-1.5
-                            rounded-lg
-                            px-2 sm:px-2.5
-                            py-1.5
-                            text-xs
-                            font-semibold
-                            text-cyan-400
-                            hover:bg-cyan-500/10
-                            hover:text-cyan-300
-                            transition-colors
-                            border
-                            border-cyan-500/30
-                        "
-                    >
-                        <Shield
-                            size={14}
-                            className="
-                                text-cyan-400
-                                shrink-0
-                            "
-                        />
-
-                        <span>
-                            Admin
-                        </span>
-                    </button>
 
                     {/* -------------------------------------------------
                         Feedback Button
@@ -660,34 +622,6 @@ export default function Header() {
                                             </strong>
                                         </div>
 
-                                        {/* Admin Dashboard */}
-                                        <button
-                                            onClick={() => {
-                                                setIsUserDropdownOpen(false);
-                                                openAdmin();
-                                            }}
-                                            className="
-                                                flex
-                                                w-full
-                                                items-center
-                                                gap-2
-                                                rounded-xl
-                                                p-2
-                                                text-xs
-                                                text-cyan-300
-                                                hover:bg-[#2c2c2c]
-                                                transition-colors
-                                            "
-                                        >
-                                            <Shield
-                                                size={14}
-                                                className="text-cyan-400"
-                                            />
-
-                                            <span>
-                                                Admin Dashboard
-                                            </span>
-                                        </button>
 
                                         {/* Feedback */}
                                         <button
