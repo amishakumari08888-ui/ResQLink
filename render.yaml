@@ -9,7 +9,7 @@ services:
     dockerfilePath: Dockerfile
     plan: free
     region: oregon
-    healthCheckPath: /api/admin/stats
+    healthCheckPath: /health
     envVars:
       - key: PORT
         value: 8080
